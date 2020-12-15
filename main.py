@@ -72,10 +72,10 @@ columns = ['GAME_DATE_EST',
            'BLK_away',
            'TO_away',
            'PF_away',
-           'PLUS_MINUS_away',]
+           'PLUS_MINUS_away']
 
 MERGED = pd.DataFrame(columns=columns)
-for i in range(0, len(df)):
+for i in range(0, len(df)-1):
     print(i)
     for j, game in games.iterrows():
         if game['GAME_ID'] == df.iloc[i].name[0]:
@@ -136,8 +136,7 @@ for i in range(0, len(df)):
             }, ignore_index=True)
             games.drop(j)
             break
-    if i == 1000:
-        break
 
 print(MERGED)
+MERGED.to_csv(r'evaluated_data.csv', index=False)
 
