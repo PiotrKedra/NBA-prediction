@@ -5,8 +5,10 @@ pd.set_option('display.width', 1000)
 
 games = pd.read_csv('resource/games.csv')
 games_details = pd.read_csv('resource/games_details.csv')
-
+# drop because those are duplicated columns
 games.drop(['TEAM_ID_home', 'TEAM_ID_away'], axis=1, inplace=True)
+games.sort_values('GAME_ID', inplace=True, ignore_index=False)
+games.reset_index(drop=True, inplace=True)
 
 games_details.drop(['TEAM_ABBREVIATION', 'TEAM_CITY', 'PLAYER_ID', 'PLAYER_NAME', 'START_POSITION', 'COMMENT', 'MIN'],
                    axis=1, inplace=True)
@@ -26,7 +28,6 @@ df = games_details.groupby(['GAME_ID', 'TEAM_ID']).agg({'FGM': 'sum',
                                                         'PF': 'sum',
                                                         'PLUS_MINUS': 'mean'
                                                         })
-games.sort_values('GAME_ID', inplace=True, ignore_index=False)
 
 columns = ['GAME_DATE_EST',
            'GAME_ID',
@@ -75,11 +76,14 @@ columns = ['GAME_DATE_EST',
            'PLUS_MINUS_away']
 
 MERGED = pd.DataFrame(columns=columns)
+wtf = 0
 for i in range(0, len(df)-1):
     print(i)
-    for j, game in games.iterrows():
+    for j in range(0, len(games)):
+        game = games.iloc[j]
         if game['GAME_ID'] == df.iloc[i].name[0]:
             if df.iloc[i].name[0] != df.iloc[i+1].name[0]:
+                wtf += 1
                 break
             if df.iloc[i].name[1] == game['HOME_TEAM_ID']:
                 home_index = i
@@ -134,9 +138,12 @@ for i in range(0, len(df)-1):
                 'PF_away': df.iloc[away_index]['PF'],
                 'PLUS_MINUS_away': df.iloc[away_index]['PLUS_MINUS'],
             }, ignore_index=True)
-            games.drop(j)
+            # games.drop(j, inplace=True)
+            # games.reset_index(drop=True, inplace=True)
             break
 
 print(MERGED)
-MERGED.to_csv(r'evaluated_data.csv', index=False)
+print(len(MERGED))
+print(wtf)
+MERGED.to_csv(r'resource\evaluated_data.csv', index=False)
 
