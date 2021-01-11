@@ -77,23 +77,23 @@ for season in data['SEASON'].unique():
                 'SEASON': row['SEASON'],
                 'FG_PCT_home': home_stats['FG_PCT_home'].mean(),
                 'FT_PCT_home': home_stats['FT_PCT_home'].mean(),
-                'REB_home': home_stats['REB_home'].sum(),
+                'REB_home': home_stats['REB_home'].mean(),
                 'FG_PCT_away': away_stats['FG_PCT_away'].mean(),
                 'FT_PCT_away': away_stats['FT_PCT_away'].mean(),
-                'REB_away': away_stats['REB_away'].sum(),
+                'REB_away': away_stats['REB_away'].mean(),
                 'HOME_TEAM_WINS': row['HOME_TEAM_WINS'],
-                'FG3M_home': home_stats['FG3M_home'].sum(),
-                'FG3A_home': home_stats['FG3A_home'].sum(),
-                'DREB_home': home_stats['DREB_home'].sum(),
-                'STL_home': home_stats['STL_home'].sum(),
-                'TO_home': home_stats['TO_home'].sum(),
-                'PF_home': home_stats['PF_home'].sum(),
-                'FG3M_away': away_stats['FG3M_away'].sum(),
-                'FG3A_away': away_stats['FG3A_away'].sum(),
-                'DREB_away': away_stats['DREB_away'].sum(),
-                'STL_away': away_stats['STL_away'].sum(),
-                'TO_away': away_stats['TO_away'].sum(),
-                'PF_away': away_stats['PF_away'].sum(),
+                'FG3M_home': home_stats['FG3M_home'].mean(),
+                'FG3A_home': home_stats['FG3A_home'].mean(),
+                'DREB_home': home_stats['DREB_home'].mean(),
+                'STL_home': home_stats['STL_home'].mean(),
+                'TO_home': home_stats['TO_home'].mean(),
+                'PF_home': home_stats['PF_home'].mean(),
+                'FG3M_away': away_stats['FG3M_away'].mean(),
+                'FG3A_away': away_stats['FG3A_away'].mean(),
+                'DREB_away': away_stats['DREB_away'].mean(),
+                'STL_away': away_stats['STL_away'].mean(),
+                'TO_away': away_stats['TO_away'].mean(),
+                'PF_away': away_stats['PF_away'].mean(),
             }, ignore_index=True)
 
             stats[home_stat_i]['home'] = stats[home_stat_i]['home'].append(row)
@@ -116,4 +116,4 @@ for season in data['SEASON'].unique():
 
 
 print('Size of data: ' + str(len(matches)))
-matches.to_csv(r'resource\stats_5_match_back.csv', index=False)
+matches.to_csv(r'resource\stats_5_match_back_mean.csv', index=False)
